@@ -10,8 +10,7 @@
 
     <color name="page_header">#3F51B5</color>
 
-    <color name="btn_create">#2196F3</color>
+    <color name="menu_item">#216AF3</color>
     <color name="btn_cancel">#009688</color>
-    <color name="btn_list">#009688</color>
     <color name="btn_photo">#FF5722</color>
 </resources>
