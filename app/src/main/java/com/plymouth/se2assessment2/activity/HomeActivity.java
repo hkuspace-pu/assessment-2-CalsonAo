@@ -1,14 +1,16 @@
-package com.plymouth.se2assessment2;
+package com.plymouth.se2assessment2.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.plymouth.se2assessment2.R;
+
+public class HomeActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_home);
 	}
 }
