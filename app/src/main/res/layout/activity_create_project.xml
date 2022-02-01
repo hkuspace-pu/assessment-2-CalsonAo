@@ -1,9 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.CreateProjectActivity">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/menu_create"
+        android:textColor="@color/page_header"
+        android:textStyle="bold"
+        android:textSize="28sp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:weightSum="8"
+        android:collapseColumns="*">
+
+        <TableRow android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/student_id"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/tbStudentId"
+                android:inputType="numberDecimal"
+                android:autofillHints="@string/student_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:maxLines="8"
+                android:text=""
+                android:textSize="16sp"
+                tools:ignore="LabelFor" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/first_name"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/tbFirstName"
+                android:inputType="textPersonName"
+                android:autofillHints="@string/first_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:maxLines="8"
+                android:text=""
+                android:textSize="16sp"
+                tools:ignore="LabelFor" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/last_name"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/tbLastName"
+                android:inputType="textPersonName"
+                android:autofillHints="@string/last_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:maxLines="8"
+                android:text=""
+                android:textSize="16sp"
+                tools:ignore="LabelFor"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/project_title"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/tbTitle"
+                android:inputType="text"
+                android:autofillHints="@string/project_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:maxLines="8"
+                android:text=""
+                android:textSize="16sp"
+                tools:ignore="LabelFor"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/project_description"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/tbDescription"
+                android:inputType="text"
+                android:autofillHints="@string/project_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:maxLines="8"
+                android:text=""
+                android:textSize="16sp"
+                tools:ignore="LabelFor"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/project_year"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/tbYear"
+                android:inputType="numberDecimal"
+                android:autofillHints="@string/project_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text=""
+                android:textSize="16sp"
+                tools:ignore="LabelFor"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/project_photo"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/ivPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/no_img"  />
+
+                <Button
+                    android:id="@+id/btnUploadPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:onClick="selectPhoto"
+                    android:text="@string/btn_select_photo"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+
+        </TableRow>
+    </TableLayout>
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCreateProject"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/btn_create"
+            android:textColor="@color/white"
+            android:onClick="save"
+            android:text="@string/btn_create"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/btn_cancel"
+            android:textColor="@color/white"
+            android:onClick="cancel"
+            android:text="@string/btn_cancel"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+</LinearLayout>
