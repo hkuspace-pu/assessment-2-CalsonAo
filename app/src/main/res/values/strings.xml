@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">SE2_Assessment2</string>
+    <string name="app_name">Project Uploader</string>
+
+    <string name="project_id">Project ID</string>
+    <string name="student_id">Student ID</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="project_title">Project Title</string>
+    <string name="project_description">Description</string>
+    <string name="project_year">Year</string>
+
+    <string name="btn_create">Create</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_select_photo">Select a photo</string>
+
+    <string name="no_img">No Image</string>
+
+    <string name="menu_create">Create a project</string>
+    <string name="menu_list">View all project</string>
+
+    <string name="XX">XXXXXXXXX</string>
 </resources>
