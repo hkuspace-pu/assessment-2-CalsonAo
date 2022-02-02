@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:text="@string/menu_create"
+        android:text="@string/edit_project"
         android:textColor="@color/page_header"
         android:textStyle="bold"
         android:textSize="28sp" />
@@ -249,8 +249,9 @@
 
                 <ImageView
                     android:id="@+id/ivPhoto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:contentDescription="@string/no_img"  />
 
                 <Button
