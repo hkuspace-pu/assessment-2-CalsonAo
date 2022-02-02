@@ -1,13 +1,17 @@
 package com.plymouth.se2assessment2.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -39,11 +43,11 @@ import retrofit2.Response;
 
 public class EditProjectActivity extends AppCompatActivity {
 
-//	private static final String[] PERMISSION_STORAGE = {
-//			Manifest.permission.READ_EXTERNAL_STORAGE,
-//			Manifest.permission.WRITE_EXTERNAL_STORAGE
-//	};
-//	private static final int PERMISSION_SELECT_IMAGE = 55;
+	private static final String[] PERMISSION_STORAGE = {
+			Manifest.permission.READ_EXTERNAL_STORAGE,
+			Manifest.permission.WRITE_EXTERNAL_STORAGE
+	};
+	private static final int PERMISSION_SELECT_IMAGE = 55;
 	private static final int REQUEST_CODE_SELECT_IMAGE = 88;
 
 	private ExecutorService executorService;
@@ -92,7 +96,7 @@ public class EditProjectActivity extends AppCompatActivity {
 		this.project = (Project) intent.getSerializableExtra("selectedProject");
 
 		fillData(this.project);
-//		initStoragePermission();
+		initStoragePermission();
 	}
 
 	public void selectPhoto(View view)
@@ -391,33 +395,33 @@ public class EditProjectActivity extends AppCompatActivity {
 		return project;
 	}
 
-//	private void initStoragePermission() {
-//		Log.i(Constant.TAG, "Current API Level: " + Build.VERSION.SDK_INT);
-//		if (Build.VERSION.SDK_INT >= 23) {
-//			// for API level 23 or above
-//			Log.i(Constant.TAG, "API level is 23 or above, need to ask storage permission from user!");
-//
-//			int storagePermission = ActivityCompat.checkSelfPermission(EditProjectActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//			if (storagePermission != PackageManager.PERMISSION_GRANTED) {
-//				ActivityCompat.requestPermissions(EditProjectActivity.this, PERMISSION_STORAGE, PERMISSION_SELECT_IMAGE);
-//			}
-//		}
-//		else {
-//			Log.i(Constant.TAG, "API level is below 23! Storage permission is granted automatically!");
-//		}
-//	}
+	private void initStoragePermission() {
+		Log.i(Constant.TAG, "Current API Level: " + Build.VERSION.SDK_INT);
+		if (Build.VERSION.SDK_INT >= 23) {
+			// for API level 23 or above
+			Log.i(Constant.TAG, "API level is 23 or above, need to ask storage permission from user!");
 
-//	@Override
-//	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-//		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//		if (requestCode == PERMISSION_SELECT_IMAGE) {
-//			if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//				Log.i(Constant.TAG, "Permission Granted by user! Local storage can be accessed!");
-//				Log.i(Constant.TAG, "But............ Nothing to do!!!");
-//			}
-//			else {
-//				Log.e(Constant.TAG, "Permission Denied by user! Local storage is NOT allowed to access!");
-//			}
-//		}
-//	}
+			int storagePermission = ActivityCompat.checkSelfPermission(EditProjectActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+			if (storagePermission != PackageManager.PERMISSION_GRANTED) {
+				ActivityCompat.requestPermissions(EditProjectActivity.this, PERMISSION_STORAGE, PERMISSION_SELECT_IMAGE);
+			}
+		}
+		else {
+			Log.i(Constant.TAG, "API level is below 23! Storage permission is granted automatically!");
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode == PERMISSION_SELECT_IMAGE) {
+			if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+				Log.i(Constant.TAG, "Permission Granted by user! Local storage can be accessed!");
+				Log.i(Constant.TAG, "But............ Nothing to do!!!");
+			}
+			else {
+				Log.e(Constant.TAG, "Permission Denied by user! Local storage is NOT allowed to access!");
+			}
+		}
+	}
 }

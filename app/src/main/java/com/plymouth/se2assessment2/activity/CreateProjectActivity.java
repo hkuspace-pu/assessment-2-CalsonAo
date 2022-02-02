@@ -44,7 +44,7 @@ public class CreateProjectActivity extends AppCompatActivity {
 		this.tbDescription = (TextView) findViewById(R.id.tbDescription);
 		this.tbYear = (TextView) findViewById(R.id.tbYear);
 
-		initTestData();
+//		initTestData();
 	}
 
 	public void initTestData()
