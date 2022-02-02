@@ -15,14 +15,25 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.plymouth.se2assessment2.R;
 import com.plymouth.se2assessment2.model.Project;
+import com.plymouth.se2assessment2.service.ApiClientManager;
+import com.plymouth.se2assessment2.service.ProjectService;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ListProjectActivity extends AppCompatActivity {
 
-	private ListView lvProjectList;
+	private ProjectService projectService;
 	private Project[] projects;
+
+	private ListView lvProjectList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +41,8 @@ public class ListProjectActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_list_project);
 
 		Log.i("hw2", "create project list page");
+
+		this.projectService = ApiClientManager.getInstance().getProjectService();
 
 		this.lvProjectList = (ListView) findViewById(R.id.listview);
 
@@ -65,27 +78,57 @@ public class ListProjectActivity extends AppCompatActivity {
 
 	private void retrieveProjects()
 	{
-		Project p1 = new Project();
-		p1.setProjectID(8251);
-		p1.setStudentID(10350220);
-		p1.setFirst_Name("Amy");
-		p1.setSecond_Name("Choi");
-		p1.setTitle("Biohazard 3");
-		p1.setDescription("Defeat all zombies!");
-		p1.setYear(2008);
+		// testing data
+//		Project p1 = new Project();
+//		p1.setProjectID(8251);
+//		p1.setStudentID(10350220);
+//		p1.setFirst_Name("Amy");
+//		p1.setSecond_Name("Choi");
+//		p1.setTitle("Biohazard 3");
+//		p1.setDescription("Defeat all zombies!");
+//		p1.setYear(2008);
+//		Project p2 = new Project();
+//		p2.setProjectID(9631);
+//		p2.setStudentID(20109201);
+//		p2.setFirst_Name("Bob");
+//		p2.setSecond_Name("Li");
+//		p2.setTitle("Dino Crisis 2");
+//		p2.setDescription("They are come, run, run!!!");
+//		p2.setYear(2002);
+//		projects = new Project[] {p1, p2};
+
+		projects = new Project[0];
+		Call<List<Project>> call = this.projectService.getAll();
+		call.enqueue(new Callback<List<Project>>() {
+			@Override
+			public void onResponse(Call<List<Project>> call, Response<List<Project>> response) {
+				List<Project> projectList = response.body();
+				if (projectList == null)
+				{
+					Log.i("hw2", "No projects found!");
+					Toast.makeText(getApplicationContext(), "No projects found!", Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+					Log.i("hw2", "total num of projects: " + projectList.size());
+					projects = new Project[projectList.size()];
+					projectList.toArray(projects);
+					fillData(projects);
+				}
+			}
+
+			@Override
+			public void onFailure(Call call, Throwable t) {
+				Log.d("hw2", "Error: " + t.toString());
+				Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+			}
+		});
 
 
-		Project p2 = new Project();
-		p2.setProjectID(9631);
-		p2.setStudentID(20109201);
-		p2.setFirst_Name("Bob");
-		p2.setSecond_Name("Li");
-		p2.setTitle("Dino Crisis 2");
-		p2.setDescription("They are come, run, run!!!");
-		p2.setYear(2002);
+	}
 
-		projects = new Project[] {p1, p2};
-
+	private void fillData(Project[] projects)
+	{
 		ListAdapter adapter = new ArrayAdapter<Project>(this,
 				android.R.layout.simple_list_item_2,
 				android.R.id.text1,
