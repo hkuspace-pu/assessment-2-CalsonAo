@@ -4,7 +4,7 @@
     <string name="project_id">Project ID</string>
     <string name="student_id">Student ID</string>
     <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
+    <string name="last_name">Second Name</string>
     <string name="project_title">Project Title</string>
     <string name="project_description">Description</string>
     <string name="project_year">Year</string>
