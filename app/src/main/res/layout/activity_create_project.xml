@@ -157,50 +157,7 @@
                 android:textSize="16sp"
                 tools:ignore="LabelFor"/>
         </TableRow>
-
-        <TableRow>
-            <TextView
-                android:id="@+id/tv6"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="@string/project_photo"
-                android:textSize="16sp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/ivPhoto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/no_img"  />
-
-                <Button
-                    android:id="@+id/btnUploadPhoto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:onClick="selectPhoto"
-                    android:text="@string/btn_select_photo"
-                    android:textAlignment="center"
-                    android:textAllCaps="false"
-                    android:textSize="24sp" />
-            </LinearLayout>
-
-
-        </TableRow>
     </TableLayout>
-
-
-
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
