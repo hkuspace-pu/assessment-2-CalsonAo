@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.plymouth.se2assessment2.Constant;
 import com.plymouth.se2assessment2.R;
 import com.plymouth.se2assessment2.model.Project;
 import com.plymouth.se2assessment2.service.ApiClientManager;
@@ -40,7 +41,7 @@ public class ListProjectActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_project);
 
-		Log.i("hw2", "create project list page");
+		Log.i(Constant.TAG, "create project list page");
 
 		this.projectService = ApiClientManager.getInstance().getProjectService();
 
@@ -50,9 +51,8 @@ public class ListProjectActivity extends AppCompatActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-				Log.i("hw2", "position: " + position);
 				Project selectedProject = projects[position];
-				Log.i("hw2", "[" + position + "]" + selectedProject.toString());
+				Log.i(Constant.TAG, "[" + position + "]" + selectedProject.toString());
 
 				Intent intent = new Intent(ListProjectActivity.this, EditProjectActivity.class);
 				intent.putExtra("selectedProject", selectedProject);
@@ -67,13 +67,19 @@ public class ListProjectActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.i("hw2", "resume project list page");
+		Log.i(Constant.TAG, "resume project list page");
 	}
 
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		Log.i("hw2", "restart project list page");
+		Log.i(Constant.TAG, "restart project list page");
+		retrieveProjects();
+	}
+
+	public void backToHome(View view)
+	{
+		finish();
 	}
 
 	private void retrieveProjects()
@@ -105,12 +111,12 @@ public class ListProjectActivity extends AppCompatActivity {
 				List<Project> projectList = response.body();
 				if (projectList == null)
 				{
-					Log.i("hw2", "No projects found!");
+					Log.i(Constant.TAG, "No projects found!");
 					Toast.makeText(getApplicationContext(), "No projects found!", Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
-					Log.i("hw2", "total num of projects: " + projectList.size());
+					Log.i(Constant.TAG, "total num of projects: " + projectList.size());
 					projects = new Project[projectList.size()];
 					projectList.toArray(projects);
 					fillData(projects);
@@ -119,7 +125,7 @@ public class ListProjectActivity extends AppCompatActivity {
 
 			@Override
 			public void onFailure(Call call, Throwable t) {
-				Log.d("hw2", "Error: " + t.toString());
+				Log.d(Constant.TAG, "Error: " + t.toString());
 				Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
 			}
 		});
@@ -137,12 +143,9 @@ public class ListProjectActivity extends AppCompatActivity {
 			@NonNull
 			@Override
 			public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
 				View view = super.getView(position, convertView, parent);
 				Project project = getItem(position);
-
-				Log.i("hw2", "position: " + position);
-				Log.i("hw2", "project: " + project.toString());
+				Log.i(Constant.TAG, "[" + position + "] " + project.toString());
 
 				if (!TextUtils.isEmpty(project.getTitle())) {
 					String projectInfo = project.getTitle() + " (" + project.getProjectID() + ")";
