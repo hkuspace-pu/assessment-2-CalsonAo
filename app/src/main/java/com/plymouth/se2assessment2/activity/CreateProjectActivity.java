@@ -49,12 +49,12 @@ public class CreateProjectActivity extends AppCompatActivity {
 
 	public void initTestData()
 	{
-		this.tbStudentId.setText("921870191");
-		this.tbFirstName.setText("Amy");
-		this.tbLastName.setText("Choi");
+		this.tbStudentId.setText("203345");
+		this.tbFirstName.setText("Alvin");
+		this.tbLastName.setText("Lin");
 		this.tbTitle.setText("Battlecat");
-		this.tbDescription.setText("a game for mobile phone");
-		this.tbYear.setText("2020");
+		this.tbDescription.setText("mobile phone");
+		this.tbYear.setText("2022");
 	}
 
 	public void save(View view)
