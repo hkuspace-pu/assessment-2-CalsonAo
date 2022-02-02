@@ -1,7 +1,13 @@
 package com.plymouth.se2assessment2.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,7 +27,10 @@ import retrofit2.Response;
 
 public class CreateProjectActivity extends AppCompatActivity {
 
+	private static final String CHANNEL_ID = "create_channel";
+
 	private ProjectService projectService;
+	private int notificationId;
 
 	private TextView tbStudentId;
 	private TextView tbFirstName;
@@ -43,6 +52,9 @@ public class CreateProjectActivity extends AppCompatActivity {
 		this.tbTitle = (TextView) findViewById(R.id.tbTitle);
 		this.tbDescription = (TextView) findViewById(R.id.tbDescription);
 		this.tbYear = (TextView) findViewById(R.id.tbYear);
+
+		this.notificationId = 1;
+		this.createNotificationChannelForAndroid8OrAbove();
 
 //		initTestData();
 	}
@@ -73,6 +85,20 @@ public class CreateProjectActivity extends AppCompatActivity {
 					{
 						Log.i(Constant.TAG, "project is created successfully!");
 						Toast.makeText(getApplicationContext(), "Congratulations! Your project is created successfully!", Toast.LENGTH_LONG).show();
+
+						// send notification
+						Notification notification = new NotificationCompat.Builder(CreateProjectActivity.this, CHANNEL_ID)
+								.setSmallIcon(R.drawable.app_icon)
+								.setContentTitle("Operation Result")
+								.setContentText("Your project is created successfully!")
+								.setPriority(NotificationCompat.PRIORITY_HIGH)          // how important this notification is (this param is ignored if API level > 26, the channel importance is used instead)
+								.setAutoCancel(true)                                    // remove the notification automatically after clicking it
+								.setCategory(NotificationCompat.CATEGORY_MESSAGE)       // if user turn off notification, do NOT disturb him!
+								.build();
+						NotificationManagerCompat nmc = NotificationManagerCompat.from(CreateProjectActivity.this);
+						nmc.notify(notificationId, notification);
+						notificationId++;
+
 						finish();
 					}
 					else
@@ -163,5 +189,15 @@ public class CreateProjectActivity extends AppCompatActivity {
 		}
 
 		return project;
+	}
+
+	private void createNotificationChannelForAndroid8OrAbove() {
+		// create a NotificationChannel if API level > 26, otherwise the noti
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Create Channel", NotificationManager.IMPORTANCE_HIGH);
+			channel.setDescription("Student's create channel");
+			NotificationManager manager = getSystemService(NotificationManager.class);
+			manager.createNotificationChannel(channel);
+		}
 	}
 }

@@ -2,9 +2,14 @@ package com.plymouth.se2assessment2.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -49,11 +54,13 @@ public class EditProjectActivity extends AppCompatActivity {
 	};
 	private static final int PERMISSION_SELECT_IMAGE = 55;
 	private static final int REQUEST_CODE_SELECT_IMAGE = 88;
+	private static final String CHANNEL_ID = "edit_channel";
 
 	private ExecutorService executorService;
 	private ProjectService projectService;
 	private Project project;
 	private String selectedImagePath;
+	private int notificationId;
 
 	private TextView tbProjectId;
 	private TextView tbStudentId;
@@ -97,6 +104,9 @@ public class EditProjectActivity extends AppCompatActivity {
 
 		fillData(this.project);
 		initStoragePermission();
+
+		this.notificationId = 1;
+		this.createNotificationChannelForAndroid8OrAbove();
 	}
 
 	public void selectPhoto(View view)
@@ -196,6 +206,21 @@ public class EditProjectActivity extends AppCompatActivity {
 					{
 						Log.i(Constant.TAG, "project " + projectId + " is updated successfully!");
 						Toast.makeText(getApplicationContext(), "Project is updated successfully!", Toast.LENGTH_LONG).show();
+
+						// send notification
+						Notification notification = new NotificationCompat.Builder(EditProjectActivity.this, CHANNEL_ID)
+								.setSmallIcon(R.drawable.app_icon)
+								.setContentTitle("Operation Result")
+								.setContentText("Your project is updated successfully!")
+								.setPriority(NotificationCompat.PRIORITY_HIGH)          // how important this notification is (this param is ignored if API level > 26, the channel importance is used instead)
+								.setAutoCancel(true)                                    // remove the notification automatically after clicking it
+								.setCategory(NotificationCompat.CATEGORY_MESSAGE)       // if user turn off notification, do NOT disturb him!
+								.build();
+						NotificationManagerCompat nmc = NotificationManagerCompat.from(EditProjectActivity.this);
+						nmc.notify(notificationId, notification);
+						notificationId++;
+
+
 						finish();
 					}
 					else
@@ -229,6 +254,20 @@ public class EditProjectActivity extends AppCompatActivity {
 				{
 					Log.i(Constant.TAG, "project " + projectId + " is deleted successfully!");
 					Toast.makeText(getApplicationContext(), "Project " + projectId + " is deleted successfully!", Toast.LENGTH_LONG).show();
+
+					// send notification
+					Notification notification = new NotificationCompat.Builder(EditProjectActivity.this, CHANNEL_ID)
+							.setSmallIcon(R.drawable.app_icon)
+							.setContentTitle("Operation Result")
+							.setContentText("The project is deleted successfully!")
+							.setPriority(NotificationCompat.PRIORITY_HIGH)          // how important this notification is (this param is ignored if API level > 26, the channel importance is used instead)
+							.setAutoCancel(true)                                    // remove the notification automatically after clicking it
+							.setCategory(NotificationCompat.CATEGORY_MESSAGE)       // if user turn off notification, do NOT disturb him!
+							.build();
+					NotificationManagerCompat nmc = NotificationManagerCompat.from(EditProjectActivity.this);
+					nmc.notify(notificationId, notification);
+					notificationId++;
+
 					finish();
 				}
 				else
@@ -417,11 +456,20 @@ public class EditProjectActivity extends AppCompatActivity {
 		if (requestCode == PERMISSION_SELECT_IMAGE) {
 			if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 				Log.i(Constant.TAG, "Permission Granted by user! Local storage can be accessed!");
-				Log.i(Constant.TAG, "But............ Nothing to do!!!");
 			}
 			else {
 				Log.e(Constant.TAG, "Permission Denied by user! Local storage is NOT allowed to access!");
 			}
+		}
+	}
+
+	private void createNotificationChannelForAndroid8OrAbove() {
+		// create a NotificationChannel if API level > 26, otherwise the noti
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Edit Channel", NotificationManager.IMPORTANCE_HIGH);
+			channel.setDescription("Student's notification channel");
+			NotificationManager manager = getSystemService(NotificationManager.class);
+			manager.createNotificationChannel(channel);
 		}
 	}
 }
