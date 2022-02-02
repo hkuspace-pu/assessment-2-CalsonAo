@@ -11,7 +11,8 @@
     <color name="page_header">#3F51B5</color>
 
     <color name="menu_item">#216AF3</color>
-    <color name="btn_create">#F43636</color>
+    <color name="btn_save">#F43636</color>
+    <color name="btn_delete">#FFAC07</color>
     <color name="btn_cancel">#2196F3</color>
     <color name="btn_photo">#FF5722</color>
 </resources>

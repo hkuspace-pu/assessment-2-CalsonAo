@@ -9,7 +9,6 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
-
     <TextView
         android:id="@+id/tv1"
         android:layout_width="match_parent"
@@ -33,6 +32,29 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
+                android:text="@string/project_id"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/tbProjectId"
+                android:inputType="numberDecimal"
+                android:autofillHints="@string/project_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:maxLines="8"
+                android:text=""
+                android:textSize="16sp"
+
+                tools:ignore="LabelFor" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="@string/student_id"
                 android:textSize="16sp" />
 
@@ -51,7 +73,7 @@
 
         <TableRow>
             <TextView
-                android:id="@+id/tv8"
+                android:id="@+id/tv4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -73,7 +95,7 @@
 
         <TableRow>
             <TextView
-                android:id="@+id/tv9"
+                android:id="@+id/tv5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -95,7 +117,7 @@
 
         <TableRow>
             <TextView
-                android:id="@+id/tv3"
+                android:id="@+id/tv6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -117,7 +139,7 @@
 
         <TableRow>
             <TextView
-                android:id="@+id/tv4"
+                android:id="@+id/tv7"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -139,7 +161,7 @@
 
         <TableRow>
             <TextView
-                android:id="@+id/tv5"
+                android:id="@+id/tv8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -160,7 +182,49 @@
 
         <TableRow>
             <TextView
-                android:id="@+id/tv6"
+                android:id="@+id/tv11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/thumbnail_url"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/tbThumbnailUrl"
+                android:inputType="textUri"
+                android:autofillHints="@string/thumbnail_url"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text=""
+                android:textSize="16sp"
+                tools:ignore="LabelFor"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/poster_url"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/tbPosterUrl"
+                android:inputType="textUri"
+                android:autofillHints="@string/poster_url"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text=""
+                android:textSize="16sp"
+                tools:ignore="LabelFor"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -191,16 +255,8 @@
                     android:textAllCaps="false"
                     android:textSize="24sp" />
             </LinearLayout>
-
-
         </TableRow>
     </TableLayout>
-
-
-
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -209,7 +265,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnCreateProject"
+            android:id="@+id/btnSaveProject"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -217,7 +273,21 @@
             android:backgroundTint="@color/btn_save"
             android:textColor="@color/white"
             android:onClick="save"
-            android:text="@string/btn_create"
+            android:text="@string/btn_save"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnRemoveProject"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/btn_delete"
+            android:textColor="@color/white"
+            android:onClick="delete"
+            android:text="@string/btn_delete"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textSize="24sp" />
@@ -235,6 +305,6 @@
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textSize="24sp" />
-
     </LinearLayout>
+
 </LinearLayout>

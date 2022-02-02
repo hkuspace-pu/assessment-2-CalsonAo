@@ -11,6 +11,9 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.EditProjectActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ListProjectActivity"
             android:exported="false" />
         <activity
