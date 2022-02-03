@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,19 +33,21 @@ public class ListProjectActivity extends AppCompatActivity {
 	private ProjectService projectService;
 	private Project[] projects;
 
-	private ListView lvProjectList;
+	private ListView projectListView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_project);
 
-		Log.i(Constant.TAG, "create project list page");
-
+		Log.i(Constant.TAG, "init project list page");
+		this.projects = new Project[0];
 		this.projectService = ApiClientManager.getInstance().getProjectService();
+		this.projectListView = (ListView) findViewById(R.id.listview);
 
-		this.lvProjectList = (ListView) findViewById(R.id.listview);
-
+		///////////////////////////////////////
+		// set onclick listener for listview
+		///////////////////////////////////////
 		AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -59,7 +60,7 @@ public class ListProjectActivity extends AppCompatActivity {
 				startActivity(intent);
 			}
 		};
-		this.lvProjectList.setOnItemClickListener(listener);
+		this.projectListView.setOnItemClickListener(listener);
 
 		retrieveProjects();
 	}
@@ -84,26 +85,6 @@ public class ListProjectActivity extends AppCompatActivity {
 
 	private void retrieveProjects()
 	{
-		// testing data
-//		Project p1 = new Project();
-//		p1.setProjectID(8251);
-//		p1.setStudentID(10350220);
-//		p1.setFirst_Name("Amy");
-//		p1.setSecond_Name("Choi");
-//		p1.setTitle("Biohazard 3");
-//		p1.setDescription("Defeat all zombies!");
-//		p1.setYear(2008);
-//		Project p2 = new Project();
-//		p2.setProjectID(9631);
-//		p2.setStudentID(20109201);
-//		p2.setFirst_Name("Bob");
-//		p2.setSecond_Name("Li");
-//		p2.setTitle("Dino Crisis 2");
-//		p2.setDescription("They are come, run, run!!!");
-//		p2.setYear(2002);
-//		projects = new Project[] {p1, p2};
-
-		projects = new Project[0];
 		Call<List<Project>> call = this.projectService.getAll();
 		call.enqueue(new Callback<List<Project>>() {
 			@Override
@@ -111,6 +92,7 @@ public class ListProjectActivity extends AppCompatActivity {
 				List<Project> projectList = response.body();
 				if (projectList == null)
 				{
+					projects = new Project[0];
 					Log.i(Constant.TAG, "No projects found!");
 					Toast.makeText(getApplicationContext(), "No projects found!", Toast.LENGTH_SHORT).show();
 				}
@@ -119,8 +101,9 @@ public class ListProjectActivity extends AppCompatActivity {
 					Log.i(Constant.TAG, "total num of projects: " + projectList.size());
 					projects = new Project[projectList.size()];
 					projectList.toArray(projects);
-					fillData(projects);
 				}
+
+				setListViewAdapter(projects);
 			}
 
 			@Override
@@ -129,43 +112,47 @@ public class ListProjectActivity extends AppCompatActivity {
 				Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
 			}
 		});
-
-
 	}
 
-	private void fillData(Project[] projects)
-	{
-		ListAdapter adapter = new ArrayAdapter<Project>(this,
+	private void setListViewAdapter(Project[] projectArray) {
+		///////////////////////////////////////
+		// set adapter for listview
+		///////////////////////////////////////
+		ArrayAdapter<Project> adapter = new ArrayAdapter<Project>(this,
 				android.R.layout.simple_list_item_2,
 				android.R.id.text1,
-				projects) {
+				projectArray) {
 
-			@NonNull
 			@Override
-			public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+			public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 				View view = super.getView(position, convertView, parent);
+
 				Project project = getItem(position);
-				Log.i(Constant.TAG, "[" + position + "] " + project.toString());
+				if (project != null)
+				{
+					Log.i(Constant.TAG, "[" + position + "] " + project.toString());
 
-				if (!TextUtils.isEmpty(project.getTitle())) {
-					String projectInfo = project.getTitle() + " (" + project.getProjectID() + ")";
-					TextView tv1 = view.findViewById(android.R.id.text1);
-					tv1.setText(projectInfo);
+					if (!TextUtils.isEmpty(project.getTitle())) {
+						String projectInfo = project.getTitle() + " (" + project.getProjectID() + ")";
+						TextView tv1 = view.findViewById(android.R.id.text1);
+						tv1.setText(projectInfo);
+					}
+
+					TextView tv2 = view.findViewById(android.R.id.text2);
+					StringBuilder sb = new StringBuilder();
+					if (!TextUtils.isEmpty(project.getFirst_Name())){
+						sb.append(project.getFirst_Name());
+					}
+					if (!TextUtils.isEmpty(project.getSecond_Name())){
+						sb.append(" " + project.getSecond_Name());
+					}
+					tv2.setText(sb.toString().trim());
 				}
 
-				TextView tv2 = view.findViewById(android.R.id.text2);
-				StringBuilder sb = new StringBuilder();
-				if (!TextUtils.isEmpty(project.getFirst_Name())){
-					sb.append(project.getFirst_Name());
-				}
-				if (!TextUtils.isEmpty(project.getSecond_Name())){
-					sb.append(" " + project.getSecond_Name());
-				}
-				tv2.setText(sb.toString().trim());
 				return view;
 			}
 		};
 
-		this.lvProjectList.setAdapter(adapter);
+		this.projectListView.setAdapter(adapter);
 	}
 }
