@@ -21,6 +21,8 @@ import com.plymouth.se2assessment2.model.Project;
 import com.plymouth.se2assessment2.service.ApiClientManager;
 import com.plymouth.se2assessment2.service.ProjectService;
 
+import java.util.Calendar;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,15 +61,15 @@ public class CreateProjectActivity extends AppCompatActivity {
 //		initTestData();
 	}
 
-	public void initTestData()
-	{
-		this.tbStudentId.setText("203345");
-		this.tbFirstName.setText("Alvin");
-		this.tbLastName.setText("Lin");
-		this.tbTitle.setText("Battlecat");
-		this.tbDescription.setText("mobile phone");
-		this.tbYear.setText("2022");
-	}
+//	public void initTestData()
+//	{
+//		this.tbStudentId.setText("203345");
+//		this.tbFirstName.setText("Alvin");
+//		this.tbLastName.setText("Lin");
+//		this.tbTitle.setText("Battle Cat");
+//		this.tbDescription.setText("mobile phone");
+//		this.tbYear.setText("2022");
+//	}
 
 	public void save(View view)
 	{
@@ -144,9 +146,11 @@ public class CreateProjectActivity extends AppCompatActivity {
 			Toast.makeText(getApplicationContext(), "Please enter the project description!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		else if (project.getYear() == null) {
-			Toast.makeText(getApplicationContext(), "Please enter the project year!", Toast.LENGTH_SHORT).show();
-			return false;
+
+		if (project.getYear() == null) {
+			int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+			project.setYear(currentYear);
+			Toast.makeText(getApplicationContext(), "You haven't entered the project year yet, it is set to this year (" + currentYear + ") by default.", Toast.LENGTH_SHORT).show();
 		}
 
 		return true;
@@ -192,7 +196,7 @@ public class CreateProjectActivity extends AppCompatActivity {
 	}
 
 	private void createNotificationChannelForAndroid8OrAbove() {
-		// create a NotificationChannel if API level > 26, otherwise the noti
+		// NotificationChannel is required if API level > 26
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 			NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Create Channel", NotificationManager.IMPORTANCE_HIGH);
 			channel.setDescription("Student's create channel");
